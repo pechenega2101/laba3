@@ -1,0 +1,178 @@
+#define CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string>
+using namespace std;
+class matrix
+{
+	
+private:
+	/*int* stolb;*/
+	int** mt = nullptr;/* = new int*[1000]*/;
+	int num, mun;
+public:
+	matrix() {
+		mt = new int* [num];
+		for (int i = 0; i < num; i++)
+		{
+			mt[i] = new int[mun];
+		}
+	}
+	matrix(int n=0,int m=0) {
+		num = n;
+		mun = m;
+		mt = new int*[n];
+		for (int i = 0; i < n; i++)
+		{
+			mt[i] = new int[m];
+		}
+		vvod(0);
+	}
+	void vvod(bool ch=1){
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < mun; j++)
+			{
+				if (ch)
+					cin >> mt[i][j];
+				else
+					mt[i][j]=0;
+			}
+		}
+	}
+	void vyvod()
+	{
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < mun; j++)
+			{
+				cout << mt[i][j]<<" ";
+			}
+			cout << endl;
+		}
+	}
+	~matrix() {
+		for (int i = 0; i < num; i++)
+		{
+			delete[]mt[i];
+		}
+		delete mt;
+		cout << "destructed(da-da)"<<endl;
+	}
+	matrix(matrix& x)
+	{
+		num = x.num;
+		mun = x.mun;
+		mt = new int* [num];
+		for (int i = 0; i < num; i++)
+		{
+			mt[i] = new int[mun];
+			for (int j = 0; j < mun; j++)
+			{
+				mt[i][j] = x.mt[i][j];
+			}
+		}
+
+	}
+	matrix& operator () (int num,int number)
+	{
+		matrix f(num,number);
+		/*for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < mun; j++)
+			{
+				mt[i][j] = f.mt[i][j];
+			}
+		}*/
+		return f;
+	};
+	 matrix& operator *(matrix& x)
+	{
+
+	};
+	friend int& operator+(matrix& x, int other);
+	friend int& operator-(matrix& y, int other);
+	friend matrix& operator-(matrix& x, matrix& y);
+	friend matrix& operator+(matrix& x, matrix& y);
+};
+int & operator+(matrix& x,int other)
+{
+	int** mtx = x.mt;
+	for (int i = 0; i < x.num; i++)
+	{
+		for (int j = 0; j < x.mun; j++)
+		{
+			mtx[i][j] += other;
+		}
+	}
+	return**mtx;
+}
+int& operator-(matrix& y, int other)
+{
+	int** mtx = y.mt;
+	for (int i = 0; i < y.num; i++)
+	{
+		for (int j = 0; j < y.mun; j++)
+		{
+			mtx[i][j] -= other;
+		}
+	}
+	return**mtx;
+}
+matrix& operator+(matrix& x, matrix& y)
+{
+	for (int i = 0; i < x.num; i++)
+	{
+		for (int j = 0; j < x.mun; j++)
+		{
+			x.mt[i][j] += y.mt[i][j];
+		}
+	}
+	return x;
+}
+matrix& operator-(matrix& x, matrix& y)
+{
+	for (int i = 0; i < y.num; i++)
+	{
+		for (int j = 0; j < y.mun; j++)
+		{
+			x.mt[i][j] -= y.mt[i][j];
+		}
+	}
+	return x;
+}
+int main()
+{
+	int num, mun,chis;
+	cout << "input size of the 1st matrix:"<<endl;
+	do {
+		cin >> num;
+	} while (!num);
+	do {
+		cin >> mun;
+	} while (!mun);
+	cout << "input nomber to operations with matrix:" << endl;
+	cin >> chis;
+	matrix gobeno(num,mun);
+	cout << "fill the 1st matrix: ";
+	gobeno.vvod(1);
+	cout << "the 1st maatrix:"<<endl;
+	gobeno.vyvod();
+	matrix gobeno2(num,mun);
+	cout << "fill the 2nd matrix: ";
+	gobeno2.vvod(1);
+	cout << "the 2nd maatrix:"<<endl;
+	gobeno2.vyvod();
+	gobeno + chis;
+	cout << "new 1st matrix" << endl;
+	gobeno.vyvod();
+	matrix gobeno_govna(num, mun);
+	gobeno_govna = gobeno + gobeno2;
+	cout << "the 3rd matrix:" << endl;
+	gobeno_govna.vyvod();
+	matrix gobeno3(num, chis);
+	cout << "fill new matrix" << endl;
+	gobeno3.vvod(1);
+	cout << "new matrix" << endl;
+	gobeno3.vyvod();
+	return 0;
+}
