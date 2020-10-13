@@ -77,22 +77,21 @@ public:
 	}
 		matrix& operator () (int num,int number,int razl)
 	{
-		matrix f(num,number);
+		matrix f(num,number+razl);
 		for (int i = 0; i < num; i++)
 		{
-			for (int j=0; j < number; j++)
+			for (int j=0; j < number+razl; j++)
 			{
-				mt[i][j] = f.mt[i][j] + razl;
+				cin>>f.mt[i][j];
 			}
 		}
-		f.mt = f.mt + razl;
 		return f;
 	};
 	 matrix& operator & (matrix& x)
 	{
 		 int** mtx;
 	};
-	 /*matrix& operator =(const matrix& ch)
+	/* matrix& operator =(const matrix& ch)
 	 {
 		 mt = new int*[ch.num];
 		 for (int i = 0; i < ch.num; i++)
@@ -102,6 +101,7 @@ public:
 				 mt[i][j] = ch.mt[i][j];
 			 }
 		 }
+		 return*this;
 	 }*/
 	friend int& operator+(matrix& x, int other);
 	friend int& operator-(matrix& y, int other);
@@ -204,14 +204,14 @@ int main()
 	gobeno_govna = gobeno + gobeno2;
 	cout << "the 3rd matrix:" << endl;
 	gobeno_govna.vyvod();
-	matrix gob3 = gobeno(num, mun, chis);
+	matrix gob3 = gobeno(mun, num, chis);
 	cout << "new matrix" << endl;
 	gob3.vyvod();
-	matrix* huuk= new matrix[ch];
-	for (int i = 0; i < ch; i++)
-	{
-		huuk[i].vvod(1);
-		huuk[i].vyvod();
-	}
+	//matrix* huuk= new matrix[ch];
+	//for (int i = 0; i < ch; i++)
+	//{
+	//	huuk[i].vvod(1);
+	//	huuk[i].vyvod();
+	//}
 	return 0;
 }
