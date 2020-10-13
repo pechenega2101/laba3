@@ -11,6 +11,8 @@ private:
 	int num, mun;
 public:
 	matrix() {
+		num = 1;
+		mun = 1;
 		mt = new int* [num];
 		for (int i = 0; i < num; i++)
 		{
@@ -73,22 +75,34 @@ public:
 		}
 
 	}
-	matrix& operator () (int num,int number)
+		matrix& operator () (int num,int number,int razl)
 	{
 		matrix f(num,number);
-		/*for (int i = 0; i < num; i++)
+		for (int i = 0; i < num; i++)
 		{
-			for (int j = 0; j < mun; j++)
+			for (int j=0; j < number; j++)
 			{
-				mt[i][j] = f.mt[i][j];
+				mt[i][j] = f.mt[i][j] + razl;
 			}
-		}*/
+		}
+		f.mt = f.mt + razl;
 		return f;
 	};
-	 matrix& operator *(matrix& x)
+	 matrix& operator & (matrix& x)
 	{
-
+		 int** mtx;
 	};
+	 /*matrix& operator =(const matrix& ch)
+	 {
+		 mt = new int*[ch.num];
+		 for (int i = 0; i < ch.num; i++)
+		 {
+			 for (int j = 0; j < ch.mun; j++)
+			 {
+				 mt[i][j] = ch.mt[i][j];
+			 }
+		 }
+	 }*/
 	friend int& operator+(matrix& x, int other);
 	friend int& operator-(matrix& y, int other);
 	friend matrix& operator-(matrix& x, matrix& y);
@@ -143,20 +157,41 @@ matrix& operator-(matrix& x, matrix& y)
 int main()
 {
 	int num, mun,chis;
+	const int ch = 2;
 	cout << "input size of the 1st matrix:"<<endl;
 	do {
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(32767, '\n');
+		}
 		cin >> num;
-	} while (!num);
+	} while (!num||num<=0);
 	do {
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(32767, '\n');
+		}
 		cin >> mun;
-	} while (!mun);
+	} while (!mun||mun<=0);
 	cout << "input nomber to operations with matrix:" << endl;
-	cin >> chis;
+	do {
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(32767, '\n');
+		}
+		cin >> chis;
+	} while (!chis);
+	matrix govino();
 	matrix gobeno(num,mun);
 	cout << "fill the 1st matrix: ";
 	gobeno.vvod(1);
 	cout << "the 1st maatrix:"<<endl;
 	gobeno.vyvod();
+	matrix copy(gobeno);
+	copy.vyvod();
 	matrix gobeno2(num,mun);
 	cout << "fill the 2nd matrix: ";
 	gobeno2.vvod(1);
@@ -169,10 +204,14 @@ int main()
 	gobeno_govna = gobeno + gobeno2;
 	cout << "the 3rd matrix:" << endl;
 	gobeno_govna.vyvod();
-	matrix gobeno3(num, chis);
-	cout << "fill new matrix" << endl;
-	gobeno3.vvod(1);
+	matrix gob3 = gobeno(num, mun, chis);
 	cout << "new matrix" << endl;
-	gobeno3.vyvod();
+	gob3.vyvod();
+	matrix* huuk= new matrix[ch];
+	for (int i = 0; i < ch; i++)
+	{
+		huuk[i].vvod(1);
+		huuk[i].vyvod();
+	}
 	return 0;
 }
